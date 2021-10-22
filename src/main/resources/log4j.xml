@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.menu.applicant">
+	<logger name="com.menu.*">
 		<level value="DEBUG" />
 	</logger>
 	
