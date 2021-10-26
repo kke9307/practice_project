@@ -16,25 +16,25 @@
 		<table border="2">
 			<thead>
 				<colgroup>
-					<col style="width:50%; "/>
+					<col style="width:40%; "/>
 					<col style="width:30%" />
 					<col style="width:30%" />
 				</colgroup>
+			</thead>
 				<tr style="background-color:blue;">
 					<th>통화명</th>
 					<th>받으실때</th>
 					<th>보내실때</th>
 				</tr>
-			</thead>
-		<c:forEach items="${data }" var="item" varStatus="status">
 		<tbody>
+		<c:forEach items="${data }" var="item" varStatus="status">
 			<tr>
 				<td>${item.cur_nm }	</td>
-				<td> ${item.ttb }${item.cur_unit }</td> 
-				<td>${item.tts }${item.cur_unit }</td> 
+				<td> ${item.ttb } ${item.cur_unit }</td> 
+				<td>${item.tts } ${item.cur_unit }</td> 
 			</tr>
-		</tbody>
 		</c:forEach>
+		</tbody>
 		</table>
 </div>
 </body>
