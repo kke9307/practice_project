@@ -1,5 +1,6 @@
 package com.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,6 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.context.annotation.Configuration;
 
 public class DataUtils {
 	/**
@@ -267,7 +269,81 @@ public class DataUtils {
 		
 		return null;
 	}
-	
+	/**
+	 * HTTP Request 호출
+	 * @param url - 호출 URL
+	 * @param is_post - POST 여부
+	 * @param data - 전송 데이터
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getHttp(String url, boolean ispost) {
+		URL src;
+		HttpURLConnection con = null;
+		OutputStreamWriter wr = null;
+		InputStream is = null;
+		try {
+			src = new URL(url);
+			con = (HttpURLConnection) src.openConnection();
+			
+			if(ispost) {
+				con.setRequestMethod("POST");
+				con.setDoInput(true);
+				con.setDoOutput(true);
+				// Request Body에 Data를 담기위해 OutputStream 객체를 생성.
+				OutputStream os = con.getOutputStream();
+				// Request Body에 Data 셋팅.
+				  os.flush();
+				  os.close();
+			}else {
+				con.setRequestMethod("GET");
+				con.setDoOutput(false); 
+			}
+			if(con.getResponseCode() == con.HTTP_OK || con.getResponseCode() == con.HTTP_CREATED) {
+				BufferedReader rd;
+				rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				StringBuilder sb = new StringBuilder();
+				String line;
+				while ((line = rd.readLine()) != null) {
+					sb.append(line);
+				}
+			    return sb.toString();
+			}else {
+				is = con.getInputStream();
+				StringBuffer sb = new StringBuffer();
+			     byte[] b = new byte[4096];
+			     for (int n; (n = is.read(b)) != -1;) {
+			         sb.append(new String(b, 0, n));
+			     }
+			  sb.toString();
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if(wr != null) {
+				try {
+					wr.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null) {
+				con.disconnect();
+			}
+		}
+		
+		return null;
+	}
 	/**
 	 * HTTP GET 호출해서 결과 JSON 받기
 	 * @param url - 호출 URL

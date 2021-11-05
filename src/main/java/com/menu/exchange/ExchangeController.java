@@ -1,4 +1,4 @@
-package com.menu.api;
+package com.menu.exchange;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

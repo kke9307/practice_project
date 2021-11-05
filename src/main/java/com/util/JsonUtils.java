@@ -107,4 +107,20 @@ public class JsonUtils {
         
         return list;
     }
+    
+    
+    /**
+     * Xml을 JsonObject로 변환한다.
+     *
+     * @param String, xml
+     * @return JSONObject
+     */
+    public static JSONObject getJsonObjectFromString( String xml )
+    {
+    	JSONObject json = XML.toJSONObject(xml);   
+        String jsonString = json.toString(4);  
+        System.out.println(jsonString);  
+        
+        return list;
+    }
 }
