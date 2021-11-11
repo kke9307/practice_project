@@ -8,6 +8,8 @@
 </head>
 <link rel="stylesheet" type="text/css" href="../../css/style.css" /> 
 <body>
+<div id="header"></div>
+<div>
 <table class="type10">
 	<thead>
 	  <tr>
@@ -24,5 +26,8 @@
 		</c:forEach>
 	 </c:forEach>
  </table>
+ </div>
+ <body>
+<div id="footer"></div>
 </body>
 </html>

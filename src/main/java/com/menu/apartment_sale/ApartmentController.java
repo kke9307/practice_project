@@ -45,13 +45,13 @@ public class ApartmentController {
 	Document doc = builder.parse(new InputSource(new StringReader(data)));
 	NodeList list = doc.getElementsByTagName("items");
 	List<HashMap<String,String>> itemList = new ArrayList<>();
-	HashMap<String,String> hs = new HashMap<String, String>();
 	Node family = list.item(0);
 	NodeList cList = family.getChildNodes();
 	for(int i=0 ; i<cList.getLength() ; i++) {
 		Node firstChild = cList.item(i);
 		NodeList fcList = firstChild.getChildNodes();
 
+		HashMap<String,String> hs = new HashMap<String, String>();
 		for(int k = 0 ; k < fcList.getLength() ; k++) {
 			Node secondChild = fcList.item(k);
 			NodeList scList = secondChild.getChildNodes();
