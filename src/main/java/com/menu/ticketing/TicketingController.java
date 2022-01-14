@@ -1,6 +1,9 @@
 package com.menu.ticketing;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -59,16 +62,17 @@ public class TicketingController {
 	@RequestMapping(value = "/ticket/list", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, Locale locale, Model model) throws Exception {
 		String val = ServletRequestUtils.getStringParameter(request, "searchVal");
-		String URL = "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=01&amp;theatercode=0013&amp;date="+val;
+		String URL = "http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=01&theatercode=0013&date="+val;
 		
-		/*		try {
-					Desktop.getDesktop().browse(new URI("http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=01&amp;theatercode=0013&amp;date=20210713"));
-				} catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
+		try {														
+			Desktop.getDesktop().browse(new URI("http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=01&theatercode=0013&date="+val));
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		try {
 			ArrayList<String> movie = new ArrayList<String>(); 
+			ArrayList<String[]> movieList = new ArrayList<String[]>(); 
 			Document doc = Jsoup.connect(URL).get();
 			Elements elem = doc.select("div[class=\"col-times\"]");
 			for(Element element: elem) {
@@ -76,9 +80,12 @@ public class TicketingController {
 					movie.add( element.text());
 				}
 			 }
-			
+			for(int i = 0 ; i < movie.size(); i ++) {
+				String[] movieListTmp = movie.get(i).split("/");
+				movieList.add(movieListTmp);
+			}
 			model.addAttribute("searchDate", val);
-			model.addAttribute("movieList", movie);
+			model.addAttribute("movieList", movieList);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
