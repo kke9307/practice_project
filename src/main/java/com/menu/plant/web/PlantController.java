@@ -1,6 +1,5 @@
-package com.menu.plant;
+package com.menu.plant.web;
 
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.menu.plant.model.PlantVo;
 import com.util.DataUtils;
 import com.util.JsonUtils;
 
@@ -28,12 +28,14 @@ import com.util.JsonUtils;
 public class PlantController {
 	protected org.slf4j.Logger logger = LoggerFactory.getLogger(PlantController.class);	
 	
+	
+	
 	@RequestMapping(value = {"/plant"} , method = RequestMethod.GET)
-	public String api(HttpServletRequest request, Model model) {
+	public String api(HttpServletRequest request, Model model , PlantVo plantVo) {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		Map<String, Object> input = new HashMap<String, Object>();
-		int firstIndex = 80;
-		int lastIndex = 90;
+		int firstIndex = 1;
+		int lastIndex = 10;
 		String api_url = "https://api.odcloud.kr/api/15077852/v1/uddi:2b0d4f52-3009-44f2-9ea5-ed827d8ad217?page="+firstIndex+"&perPage="+lastIndex+"&serviceKey=SDjGa32JnwdtPGetOx2JNBCSn6bnSOc9Z3jTlTt4rHgYOhW9ACwSs%2By%2FV1a%2Bs5Ew0T0OAbgv%2FI18igjfdGQnzQ%3D%3D";
 		
 		try {
@@ -44,8 +46,9 @@ public class PlantController {
 				List<Map<String, Object>> map = (List<Map<String, Object>>) input.get("data");
 				HashMap<String,Object> plant_col = new HashMap<>();
 				plant_col.putAll(map.get(0));
-				System.out.println(plant_col.toString());
-				model.addAttribute("data", plant_col);
+				plantVo.set적재년월일(String.valueOf(plant_col.get("적재년월일")));
+				System.out.println(plantVo.get적재년월일());
+				model.addAttribute("data", map);
 		} catch (Exception e) {
 			model.addAttribute("result", "fail");
 			model.addAttribute("msg","api 연동 실패");
