@@ -13,6 +13,9 @@
 	<li><a href="/apartment/rent">아파트 전세</a></li>
 	<li><a href="/exchange">환율</a></li>
 	<li><a href="/home">home</a></li>
+	<li><a href="/naver_map">map</a></li>
+	<li><a href="/naver_location">위도경도</a></li>
+	<li><a href="/naver_map_example">위도경도 example</a></li>
 </ul>
 </body>
 </html>
